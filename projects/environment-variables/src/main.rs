@@ -20,11 +20,13 @@ fn main() {
     }
     assert_eq!(env::var(key), Ok("1".to_string()));
 
-    println!("... can check this variable is set ... ");
-
-    for (key, value) in std::env::vars() {
-        println!("{key}: {value}");
+    let key = "RUST_GREP_IGNORE_CASE";
+    unsafe {
+        env::set_var(key, "1");
     }
+    assert_eq!(env::var(key), Ok("1".to_string()));
+
+    println!("... can check this variable is set ... ");
 
     println!("... to print just matching environment variables ...");
 
