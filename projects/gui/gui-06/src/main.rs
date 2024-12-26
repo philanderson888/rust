@@ -7,7 +7,28 @@ use gtk::{CssProvider,gdk::Display};
 const APP_ID: &str = "com.example.gui";
 
 fn main() {
-    
+
+    println!("==============================================================");
+    println!("==============================================================");
+    println!("====               Counter Sample Application              ====");
+    println!("==============================================================");
+    println!("==============================================================");
+
+    println!("==============================================================");
+    println!("====                   Introduction                       ====");
+    println!("==============================================================");
+
+    println!("Counter is a simple GUI application that increments a counter each time a button is clicked");   
+
+    println!("\n... the idea will be to combine the learning to date to build a real-world application");
+
+    println!("\ninputs: button click");
+    println!("\noutputs: counter value");
+    println!("\nconfiguration: environment variables, command-line arguments ... ");
+
+    println!("\ndocumentation at https://www.gtk.org/docs/language-bindings/rust/");
+    println!("\n... book at https://gtk-rs.org/gtk4-rs/stable/latest/book/widgets.html");
+
     // Create a new application
     let app = Application::builder().application_id(APP_ID).build();
 
