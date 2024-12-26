@@ -1,6 +1,17 @@
 use std::env;
-use std::fs;
+use std::process;
+use minigrep::{Config, run};
+
 fn main() {
+
+    // can run with RUST_GREP_IGNORE_CASE=0 cargo run NOBODY poem.txt
+
+    // can run to output to file eg cargo run > output.txt
+
+    // can print error output to standard output using eprintln! macro 
+
+    // with eprint and > output.txt we view errors but standard output is redirected to file
+
     println!("==============================================================");
     println!("==============================================================");
     println!("====               Grep Sample Application                ====");
@@ -33,35 +44,31 @@ fn main() {
     dbg!(&args);
     println!("args: {:?}", args);
 
-    let (query, file_path) = parse_config(&args);
+    println!("\nunwrap or else allows us to handle errors in a more user-friendly way");
+    println!("... if result is OK then unwrap ... else result is Err so handle it gently ...");
+    let config = Config::build(&args)
+        .unwrap_or_else(|err| {
+            eprintln!("Problem parsing arguments: {}", err);
+            process::exit(1);
+        });
 
-    println!("Searching for '{}'", query);
-    println!("In file '{}'", file_path);
+    println!("Searching for '{}'", config.query);
+    println!("In file '{}'", config.file_path);
 
     println!("\n==============================================================");
-    println!("====              Reading the File                        ====");
+    println!("====                Error Handling                        ====");
     println!("==============================================================");
 
-    println!("\n... the next step is to read the file");
+    println!("... here we have a good pattern for error handling with input validation ...");
+    println!("... pass input parameters to a function that returns a Result ...");
+    println!("... if the Result is OK then continue ... else handle the error ...");
+    println!("... we then call the 'run' function to execute the main handling of the application ...");
+    println!("... the 'run' function returns a Result with a Boxed Error ...");
+    println!("... this allows us to handle any errors in a generic way ...");
+    println!("... with a clean and user friendly exit and user message ...");
 
-    let filename = "src/poem.txt";
-
-    println!("\nfile path '{}'", filename);
-
-    let contents = fs::read_to_string(filename)
-        .expect("Something went wrong reading the file");
-
-    println!("\nfile contents:\n{}", contents);   
-    
-}
-
-fn parse_config(args: &[String]) -> (&str, &str) {
-    if args.len() < 3 {
-        let query = "";
-        let file_path = "";
-        return (query, file_path)
-    }
-    let query = &args[1];
-    let file_path = &args[2];
-    (query, file_path)
+    if let Err(e) = run(config) {
+        eprintln!("Application error: {}", e);
+        process::exit(1);
+    }    
 }

@@ -33,10 +33,10 @@ fn main() {
     dbg!(&args);
     println!("args: {:?}", args);
 
-    let (query, file_path) = parse_config(&args);
+    let config = Config::new(&args);
 
-    println!("Searching for '{}'", query);
-    println!("In file '{}'", file_path);
+    println!("Searching for '{}'", config.query);
+    println!("In file '{}'", config.file_path);
 
     println!("\n==============================================================");
     println!("====              Reading the File                        ====");
@@ -55,13 +55,19 @@ fn main() {
     
 }
 
-fn parse_config(args: &[String]) -> (&str, &str) {
-    if args.len() < 3 {
-        let query = "";
-        let file_path = "";
-        return (query, file_path)
+#[derive(Debug)]
+struct Config {
+    query: String,
+    file_path: String,
+}
+
+impl Config {
+    fn new(args: &[String]) -> Config {
+        if args.len() < 3 {
+            panic!("please provide a search string and a file path");
+        }
+        let query = &args[1];
+        let file_path = &args[2];
+        Config { query: query.to_string(), file_path: file_path.to_string() }
     }
-    let query = &args[1];
-    let file_path = &args[2];
-    (query, file_path)
 }

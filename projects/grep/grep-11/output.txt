@@ -1,0 +1,77 @@
+==============================================================
+==============================================================
+====               Grep Sample Application                ====
+==============================================================
+==============================================================
+==============================================================
+====                   Introduction                       ====
+==============================================================
+Grep is a command-line utility for searching plain-text data sets for lines that match a regular expression
+Its name comes from the ed command g/re/p (globally search a regular expression and print)
+which has the same effect: doing a global search with the regular expression and printing all matching lines
+
+... the idea will be to combine the learning to date to build a real-world application
+
+inputs: path to file, string to search for
+
+outputs: lines containing the string
+
+configuration: environment variables, command-line arguments ... 
+
+... eg case sensitive/insensitive search, whole word search, line numbers, file names, etc
+
+error handling: invalid inputs, invalid UTF-8, file not found
+
+==============================================================
+====              Accepting Command Line Arguments        ====
+==============================================================
+
+... the first step is to accept command line arguments
+args: ["target/debug/minigrep", "NOBODY", "poem.txt"]
+
+unwrap or else allows us to handle errors in a more user-friendly way
+... if result is OK then unwrap ... else result is Err so handle it gently ...
+
+ignore_case: true
+CARGO_PKG_RUST_VERSION: 
+RUSTUP_HOME: /Users/phil/.rustup
+RUSTUP_TOOLCHAIN: stable-aarch64-apple-darwin
+RUST_GREP_IGNORE_CASE: 0
+RUST_RECURSION_COUNT: 1
+Searching for 'NOBODY'
+In file 'poem.txt'
+
+==============================================================
+====                Error Handling                        ====
+==============================================================
+... here we have a good pattern for error handling with input validation ...
+... pass input parameters to a function that returns a Result ...
+... if the Result is OK then continue ... else handle the error ...
+... we then call the 'run' function to execute the main handling of the application ...
+... the 'run' function returns a Result with a Boxed Error ...
+... this allows us to handle any errors in a generic way ...
+... with a clean and user friendly exit and user message ...
+
+==============================================================
+====              Reading the File                        ====
+==============================================================
+... read the file from config file_path ... which is 'poem.txt'
+
+file read error is returned as a boxed trait object ... Box<dyn Error>
+
+file contents:
+
+I'm nobody! Who are you?
+Are you nobody, too?
+Then there's a pair of us - don't tell!
+They'd banish us, you know.
+
+How dreary to be somebody!
+How public, like a frog
+To tell your name the livelong day
+To an admiring bog!
+
+
+
+I'm nobody! Who are you?
+Are you nobody, too?

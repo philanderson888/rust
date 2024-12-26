@@ -1,5 +1,6 @@
 use std::env;
 use std::fs;
+use std::process;
 fn main() {
     println!("==============================================================");
     println!("==============================================================");
@@ -33,10 +34,40 @@ fn main() {
     dbg!(&args);
     println!("args: {:?}", args);
 
-    let (query, file_path) = parse_config(&args);
+    println!("\nunwrap or else allows us to handle errors in a more user-friendly way");
+    println!("... if result is OK then unwrap ... else result is Err so handle it gently ...");
+    let config = Config::build(&args)
+        .unwrap_or_else(|err| {
+            println!("Problem parsing arguments: {}", err);
+            process::exit(1);
+        });
 
-    println!("Searching for '{}'", query);
-    println!("In file '{}'", file_path);
+    println!("Searching for '{}'", config.query);
+    println!("In file '{}'", config.file_path);
+
+    run(config);
+    
+}
+
+#[derive(Debug)]
+struct Config {
+    query: String,
+    file_path: String,
+}
+
+impl Config {
+    fn build(args: &[String]) -> Result<Config, &'static 
+    str> {
+        if args.len() < 3 {
+            return Err("please provide a search string and a file path");
+        }
+        let query = args[1].clone();
+        let file_path = args[2].clone();
+        Ok(Config { query, file_path })
+    }
+}
+
+fn run(config: Config) {
 
     println!("\n==============================================================");
     println!("====              Reading the File                        ====");
@@ -45,23 +76,13 @@ fn main() {
     println!("\n... the next step is to read the file");
 
     let filename = "src/poem.txt";
-
     println!("\nfile path '{}'", filename);
+
+    println!("\n ... in the future read the file from config file_path ... which is '{}'", config.file_path);
 
     let contents = fs::read_to_string(filename)
         .expect("Something went wrong reading the file");
 
     println!("\nfile contents:\n{}", contents);   
-    
-}
 
-fn parse_config(args: &[String]) -> (&str, &str) {
-    if args.len() < 3 {
-        let query = "";
-        let file_path = "";
-        return (query, file_path)
-    }
-    let query = &args[1];
-    let file_path = &args[2];
-    (query, file_path)
 }
