@@ -449,10 +449,6 @@ fn main() {
     let result = longest_with_an_announcement(string1.as_str(), string2.as_str(), "the longest string is");
     println!("... the longest string is {}", result);
 
-    
-
-
-
 }
 
 fn get_largest_number_without_generics(number_list : Vec<i32>) -> i32 {
@@ -542,7 +538,6 @@ impl Point<f32> {
         (self.x.powi(2) + self.y.powi(2)).sqrt()
     }
 }
-
 struct PointWithDifferentTypes<T, U> {
     x: T,
     y: U
