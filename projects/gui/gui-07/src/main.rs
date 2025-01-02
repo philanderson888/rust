@@ -59,40 +59,68 @@ fn build_ui(application: &Application) {
         .application(application)
         .title("Counter")
         .default_width(500)
-        .default_height(500)
+        .default_height(700)
         .build();
     window.set_widget_name("counter_window");
 
-    let vbox = Box::new(gtk::Orientation::Vertical, 5);
+    let vbox = Box::new(gtk::Orientation::Vertical, 50);
 
-    let button = Button::builder()
+    let button01 = Button::builder()
         .label("Increase")
         .margin_top(20)
         .margin_bottom(20)
         .margin_start(20)
         .margin_end(20)
         .build();
-    button.set_widget_name("counter_button");
-    button.add_css_class("text_button");
+    button01.set_widget_name("counter_button");
+    button01.add_css_class("text_button");
+
+    let button02 = Button::builder()
+        .label("Decrease")
+        .margin_top(20)
+        .margin_bottom(20)
+        .margin_start(20)
+        .margin_end(20)
+        .build();
+    button02.set_widget_name("counter_button");
+    button02.add_css_class("text_button");
 
     let label = Label::new(Some("Counter: 0"));
     label.set_widget_name("counter_label");
 
     let counter = Rc::new(RefCell::new(0));
 
-    let window_clone = window.clone();
-    let counter_clone = Rc::clone(&counter);
-    let label_clone = label.clone();
-    let button_clone = button.clone();
-    button.connect_clicked(move |_| {
-        *counter_clone.borrow_mut() += 1;
-        println!("Counter: {}", *counter_clone.borrow());
-        window_clone.set_title(Some(&format!("Counter: {}", *counter_clone.borrow())));
-        label_clone.set_text(&format!("Counter: {}", *counter_clone.borrow()));
-        button_clone.set_label(&format!("Counter: {}", *counter_clone.borrow())); 
+    let window_clone01 = window.clone();
+    let window_clone02 = window.clone();
+    let counter_clone01 = Rc::clone(&counter);
+    let counter_clone02 = Rc::clone(&counter);
+    let label_clone01 = label.clone();
+    let label_clone02 = label.clone();
+    let button01_clone01 = button01.clone();
+    let button01_clone02 = button01.clone();
+    let button02_clone01 = button02.clone();
+    let button02_clone02 = button02.clone();
+    
+    button01.connect_clicked(move |_| {
+        *counter_clone01.borrow_mut() += 1;
+        println!("Counter: {}", *counter_clone01.borrow());
+        window_clone01.set_title(Some(&format!("Counter: {}", *counter_clone01.borrow())));
+        label_clone01.set_text(&format!("Counter: {}", *counter_clone01.borrow()));
+        button01_clone01.set_label(&format!("+ {}", *counter_clone01.borrow())); 
+        button02_clone01.set_label(&format!("- {}", *counter_clone01.borrow()));
     });
 
-    vbox.append(&button);
+    button02.connect_clicked(move |_| {
+        *counter_clone02.borrow_mut() -= 1;
+        println!("Counter: {}", *counter_clone02.borrow());
+        window_clone02.set_title(Some(&format!("Counter: {}", *counter_clone02.borrow())));
+        label_clone02.set_text(&format!("Counter: {}", *counter_clone02.borrow()));
+        button01_clone02.set_label(&format!("+ {}", *counter_clone02.borrow())); 
+        button02_clone02.set_label(&format!("- {}", *counter_clone02.borrow()));
+    });
+
+    vbox.append(&button01);
+    vbox.append(&button02);
     vbox.append(&label);
     window.set_child(Some(&vbox));
     window.present();
