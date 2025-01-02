@@ -17,6 +17,17 @@ fn main() {
     println!("... polymorphism allows a method to do different things based on the object it is acting upon ...");
     println!("... abstraction allows a class to provide a simple interface to a complex object ...");
 
+    println!("\n... In Rust, we can use structs and traits to achieve OOP concepts ...");
+    println!("... we use structs and enums to define types and impl blocks to define methods ...");
+    println!("... also rust does not have direct inheritance but uses traits which is similar to interfaces in other languages ...");
+    println!("... so a type ... has methods ... with given traits ... which define permitted inputs and outputs ie method signatures ...");
+    println!("... this allows us to indirectly achieve inheritance ...");
+    println!("... also rust does not have constructors but can use an associated 'new' function to achieve the same thing ...");
+    println!("... with encapsluation, fields are private by default and explicitly require the 'pub' keyword to be public ...");
+    println!("... or use public getters and setters to access the fields ...");
+    
+    println!("\n... Let's look at an example of encapsulation ...");
+
     println!("==============================================================");
     println!("====                    Encapsulation                     ====");
     println!("==============================================================");

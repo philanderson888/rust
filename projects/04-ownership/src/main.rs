@@ -38,7 +38,7 @@ fn main() {
     println!("{}", string04); // This will work
 
     println!("==============================================================");
-    println!("====        Functions - Primities Stay In Scope           ====");
+    println!("====        Functions - Primitives Stay In Scope          ====");
     println!("==============================================================");
 
     let x = 5;                      // x comes into scope
@@ -64,7 +64,6 @@ fn main() {
     let string07 = gives_ownership(string06);         // gives_ownership moves its return
                                                       // value into string07
     println!("{}", string07);
-
 
     println!("==============================================================");
     println!("====          Functions - Passing A Reference             ====");
@@ -206,8 +205,6 @@ fn main() {
     assert_eq!([2, 3], array_slice01);
 
     println!("... the array slice points to the first element and provides the length of the slice, that is all that is required\n");
-
-    
 
 }
 

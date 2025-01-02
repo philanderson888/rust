@@ -28,6 +28,7 @@ fn main() {
 
     println!("Closures are anonymous functions that can capture their environment");
     println!("... they can capture values from the scope in which they are defined");
+    println!("function outer(){  let x = 10; function inner(){  return x;  }  return inner;  } ... will return the value of x ... ");
 
     let x = 4;
 
@@ -36,7 +37,6 @@ fn main() {
     let y = 4;
 
     assert!(equal_to_x(y));
-
 
     println!("==============================================================");
     println!("====                   Iterators                         ====");
