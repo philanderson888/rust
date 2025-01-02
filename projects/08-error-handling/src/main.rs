@@ -62,7 +62,6 @@ fn main() {
     println!("... to get a full backtrace of all functions called up to this point ...");
     println!("... we can set the environment variable RUST_BACKTRACE=1 or RUST_BACKTRACE=full");
 
-
     println!("==============================================================");
     println!("====                    Result Errors                      ====");
     println!("==============================================================");
@@ -285,7 +284,6 @@ fn main() {
     };
 
     println!("Age: {}", age);
-
 
     println!("... or we could ensure the guess of a user is within a certain range ...");
 
