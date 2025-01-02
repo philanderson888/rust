@@ -1,6 +1,0 @@
-[package]
-name = "functional-programming"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]
