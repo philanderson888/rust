@@ -1,0 +1,28 @@
+#counter_window {
+    background-color: rgb(217, 128, 128);
+    border: 10px solid black;
+    font-size: 20px;
+}
+
+#counter_button {
+    color: rgb(0, 89, 255);
+    font-size: 50px;
+    border: 1px solid rgb(11, 44, 17);
+}
+
+#counter_button:hover {
+    background-color: rgb(208, 208, 28);
+}
+
+.text_button {
+    font-size: 100px;
+}
+
+title {
+    color: green;
+}
+
+#counter_label {
+    color: blue;
+    background-color: rgb(101, 149, 227);
+}
