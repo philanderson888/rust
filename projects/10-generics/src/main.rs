@@ -351,7 +351,11 @@ fn main() {
 
     println!("... lifetimes are a way to ensure that references are valid for a certain period of time");
     println!("... lifetimes are not use in other languages so can be confusing at first");
-    println!("... the main aim of lifetimes is to prevent dangling references");
+    println!("... the main aim of lifetimes is to prevent a) dangling references b) use-after-free errors");
+    println!("... a dangling reference is a reference to a value that no longer exists");
+    println!("... a use-after-free error is when we try to use a reference to a value that has been deallocated");
+    println!("... a lifetime is a pointer and length to any string in memory");
+    println!("... c programs will compile if a potential bug exists but rust programs will not ... ");
     println!("... when we use a reference eg in a struct, we need to ensure that the reference is valid for the lifetime of the struct");
     println!("... we can use lifetimes to ensure that the reference is valid for the lifetime of the object it references");
     println!("... we need to use lifetimes when we have references in structs or functions");
@@ -361,6 +365,7 @@ fn main() {
     println!("... lifetime elision rules are used to determine the lifetimes of references automatically ... ");
     println!("... these elision rules dont always require us to specify lifetimes");
     println!("... static lifetime is valid for the entire duration of the program");
+    println!("... lifetimes are the way to be memory safe without garbage collection");
 
     let r;
 
