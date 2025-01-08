@@ -9,4 +9,6 @@
 
 please see code at 
 
-[functional programming](../p)
+[release](/projects/14-release/)
+
+
