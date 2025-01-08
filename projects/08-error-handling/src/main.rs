@@ -180,6 +180,11 @@ fn main() {
 
     println!("... the `unwrap` method is a shortcut method that returns the value of the `Ok` variant if the result is `Ok`");
     println!("... and panics if the result is `Err`");
+    println!("... the `unwrap` method is useful when we are confident that the result will be `Ok`");
+    println!("... and we want the program to panic if the result is `Err`");
+    println!("... it is not recommended to use the `unwrap` method in production code.");
+    println!("... because it will panic if the result is `Err`");
+    println!("... so its better to use this in prototyping or testing code.");
 
     let _file05 = File::open("Hello.txt").unwrap();
 
@@ -190,6 +195,9 @@ fn main() {
     println!("==============================================================");
 
     println!("... the `expect` method is similar to the `unwrap` method, but it allows us to specify a custom error message.");
+    println!("... as with unwrap it is not recommended to use the `expect` method in production code.");
+    println!("... because it will panic if the result is `Err`");
+    println!("... so its better to use this in prototyping or testing code.");
 
     let _file06 = File::open("Hello.txt").expect("Failed to open Hello.txt");
 
@@ -205,6 +213,8 @@ fn main() {
     println!("... and to return the error if the result is `Err`");
 
     println!("... the `?` operator can only be used in functions that return the `Result` type.");
+
+    println!("... this is useful when we dont want to handle the error immediately but at a higher level");
 
     println!("... in this example we will read the contents of a file and return the contents as a string ...");
 

@@ -11,8 +11,8 @@ fn main() {
     println!("==============================================================");
 
     println!("generics use the type <T> to represent any valid type in a system");
-    println!("... we will be learning about traits will narrow down the types we can accept");
-    println!("... we also will be learning about lifetimes which will help us manage the scope of our types");
+    println!("... we will be learning about traits which define interfaces which are implemented using the impl keyword ...");
+    println!("... we also will be learning about lifetimes for references");
 
     println!("\n... a generic type is any type represented by the type <T>");
     println!("... a concrete type is a real fixed type eg integer, float, string etc");
@@ -88,9 +88,8 @@ fn main() {
     println!("====                   Using Generics                     ====");
     println!("==============================================================");
 
-    println!("... we will now create a function that will return the largest value in a list using generics");
+    println!("... we create a function that will return the largest value in a list using generics");
     println!("... we will use the PartialOrd trait to ensure that the values in the list can be compared");
-    println!("... for simplicity, we will use a slice rather than a vector");
 
     let number_list = vec![34, 50, 25, 100, 65];
     let largest_number = get_largest_value(&number_list);
@@ -209,12 +208,9 @@ fn main() {
     println!("====                    Traits                            ====");
     println!("==============================================================");
 
-    println!("... traits are a way to define shared behavior in an abstract way");
-    println!("... traits are similar to interfaces in other languages");
-    println!("... like interfaces we define the input and output types allowed");
-    println!("... method input and output parameters are called the method signature");
+    println!("... traits are interfaces which are implemented using the impl keyword ... ");
 
-    println!("... we will create a trait called Summary that will have a method called summarize");
+    println!("\n... eg Summary trait with method summarize()");
     println!("... this method inputs itself (any object) and returns a string");
 
     let news_article = NewsArticle {
@@ -275,10 +271,9 @@ fn main() {
     println!("==============================================================");
     println!("====                 Traits As Parameters                 ====");
     println!("==============================================================");
-
     println!("... we can also use traits as parameters in functions");
-
     println!("... we will create a function called notify that will take any object that implements the Summary trait");
+    println!("... the syntax reads ... fn notify(item: &impl Summary) ...");
 
     let news_article = NewsArticle {
         headline: String::from("Penguins win the Stanley Cup Championship!"),
@@ -298,34 +293,25 @@ fn main() {
     println!("==============================================================");
     println!("====                 Multiple Traits                      ====");
     println!("==============================================================");
-
-    println!("... we can also implement multiple traits for a single struct");
-
-    println!("... we will create a function called notify_and_display that will take any object that implements the Summary and Display traits");
-
+    println!("... a type can implement multiple traits ...");
+    println!("\n... eg create function notify_and_display - takes any object which implments Summary and Display traits");
     notify_and_display(&news_article);
 
     println!("==============================================================");
     println!("====                  Where Syntax                        ====");
     println!("==============================================================");
-
     println!("... we can also use the where syntax to constrain the types that can be used in a function");
-
+    println!("... the syntax reads ... fn notify_and_display_with_where_syntax<T>(item: &T) where T: Summary + Display ...");
     notify_and_display_with_where_syntax(&news_article);
 
     println!("==============================================================");
     println!("====                Returning Traits                      ====");
     println!("==============================================================");
-
-    println!("... we can also return traits from functions");
-    println!("... this is useful when we want to return different types of objects");
-    println!("... we can use the impl keyword to return a trait");
-    println!("... this ensures that the type returned implements the given trait");
-
+    println!("... functions can return traits so we are sure of the behaviour of any types returned from the function ... ");
     println!("\n... we will create a function called returns_summarizable that will return an object that implements the Summary trait");
+    println!("... the syntax reads ... fn returns_summarizable() -> impl Summary ...");
 
     let tweet = returns_summarizable();
-
     println!("\n... the tweet returned via the returned trait function is summarizable ... ");
 
     println!("\n... the tweet summary is {}", tweet.summarize());
@@ -334,16 +320,15 @@ fn main() {
     println!("==============================================================");
     println!("====               Conditional Traits                     ====");
     println!("==============================================================");
-
     println!("... we can also use conditional traits to constrain the types that can be used in a function");
+    println!("... example syntax will be ... fn some_function<T: Display + Clone>(t: T) ...");
 
     println!("==============================================================");
     println!("====              Blanket Implementations                 ====");
     println!("==============================================================");
-
     println!("... we can also implement traits for any type that implements a specific trait");
-
     println!("... for example we can implement the Display trait for any type that implements the Summary trait");
+    println!("... syntax would be ... impl<T: Summary> Display for T ...");
 
     println!("==============================================================");
     println!("====                    Lifetimes                         ====");
@@ -570,6 +555,12 @@ pub trait Summary {
     }
 }
 
+impl Summary for NewsArticle {
+    fn summarize(&self) -> String {
+        format!("{}, by {} ({})", self.headline, self.author, self.location)
+    }
+}
+
 pub trait DisplayArticle {
     fn display(&self) -> String;
 }
@@ -583,12 +574,6 @@ impl DisplayArticle for NewsArticle {
 pub trait SummaryWithDefault {
     fn summarize_with_default(&self) -> String {
         String::from("(Read more...)")
-    }
-}
-
-impl Summary for NewsArticle {
-    fn summarize(&self) -> String {
-        format!("{}, by {} ({})", self.headline, self.author, self.location)
     }
 }
 

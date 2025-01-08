@@ -28,6 +28,10 @@ fn main() {
     println!("They are useful when you have a list of items that you want to store in a single variable.");
     println!("You can create a new, empty vector with the Vec::new function");
     println!("you can add elements to it with the push method");
+    println!("... the capacity of a vector is the amount of space allocated for any future elements that will be added to it ...");
+    println!("... if a vector's length exceeds its capacity, its elements will be reallocated to a new space ...");
+    println!("... this is done to ensure that all elements are stored next to each other in memory ie are contiguous ...");
+    println!("... the capacity is doubled each time a vector runs out of space ...");
     println!("You can also create a vector that has the same value for each element with the vec! macro.\n");
     println!("When a collection goes out of scope rust drops the collection and all of the individual elements\n");
 
