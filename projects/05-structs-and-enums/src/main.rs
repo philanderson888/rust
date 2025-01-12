@@ -469,6 +469,7 @@ fn main() {
     println!("==============================================================");
 
     println!("... we can also use the if let syntax to reduce boilerplate");
+    println!("... if let is the same as match but only handling one outcome ...");
 
     let some_number = Some(5);
     println!("Some Number: {:?}", some_number);
