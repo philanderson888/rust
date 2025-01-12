@@ -5,10 +5,16 @@
 - [gui](#gui)
   - [contents](#contents)
   - [introduction](#introduction)
-  - [versions](#versions)
+  - [gtk](#gtk)
+    - [versions](#versions)
     - [06](#06)
     - [07](#07)
     - [08](#08)
+  - [druid](#druid)
+  - [iced](#iced)
+    - [iced reference](#iced-reference)
+    - [iced terminology](#iced-terminology)
+    - [elm architecture](#elm-architecture)
 
 ## introduction
 
@@ -18,7 +24,9 @@ there are several libraries which are available for this purpose
 
 one is `gtk` and we have used this to build a crude graphics application
 
-## versions
+## gtk
+
+### versions
 
 ### 06 
 
@@ -32,4 +40,28 @@ build two buttons not just one
 
 using weak references to build the counters for the two buttons
 
+## druid
+
+## iced
+
+we can use iced to build gui apps
+
+### iced reference
+
+https://book.iced.rs/
+
+### iced terminology
+
+- widgets interacted with by the user
+- interactions are the events triggered
+- state is underlying state of app
+
+### elm architecture
+
+elm is purely functional programming language
+
+- model
+- messages
+- update logic - how messages change state (model)
+- view logic - how the state changes the widgets
 
