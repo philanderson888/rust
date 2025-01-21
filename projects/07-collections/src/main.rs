@@ -99,6 +99,114 @@ fn main() {
     println!("... we use the dereference operator (*) to get the value in i and modify it ...");
 
     println!("==============================================================");
+    println!("====                   Arrays To Vectors                  ====");
+    println!("==============================================================");
+
+    println!("... we can convert an array to a vector using the `to_vec` method ...");
+
+    let array06 = [1, 2, 3, 4, 5];
+    let vector06 = array06.to_vec();
+    println!("array06: {:?}", array06);
+
+    println!("\n... we can also use the `to_vec` method to convert a slice to a vector ...");
+    let slice07 = &array06[1..4];
+    let vector07 = slice07.to_vec();
+    println!("slice07: {:?}", slice07);
+
+    println!("==============================================================");
+    println!("====                 Vectors To Arrays                    ====");
+    println!("==============================================================");
+
+    println!("... we can convert a vector to an array using the `as_slice` method ...");
+    let vector08 = vec![1, 2, 3, 4, 5];
+    let slice08 = vector08.as_slice();
+    println!("vector08: {:?}", vector08);
+    println!("slice08: {:?}", slice08);
+
+    println!("==============================================================");
+    println!("====                  Sorting Vectors                     ====");
+    println!("==============================================================");
+
+    println!("... we can sort a vector using the `sort` method ...");
+
+    let mut vector09 = vec![5, 3, 1, 2, 4];
+    vector09.sort();
+    println!("vector09: {:?}", vector09);
+
+    println!("==============================================================");
+    println!("====                  Vector Methods                     ====");
+    println!("==============================================================");
+
+    println!("... we can use the `pop` method to remove the last element from a vector ...");
+
+    let mut vector10 = vec![1, 2, 3, 4, 5];
+    let popped = vector10.pop();
+
+    match popped {
+        Some(popped) => println!("The popped element is: {}", popped),
+        None => println!("There is no element to pop"),
+    }
+
+    println!("... we can use the `push` method to add an element to the end of a vector ...");
+
+    let mut vector11 = vec![1, 2, 3, 4, 5];
+    vector11.push(6);
+    println!("vector11: {:?}", vector11);
+
+    println!("... we can use the `insert` method to add an element at a specific index in a vector ...");
+
+    let mut vector12 = vec![1, 2, 3, 4, 5];
+    vector12.insert(2, 6);
+    println!("vector12: {:?}", vector12);
+
+    println!("... we can use the `remove` method to remove an element at a specific index in a vector ...");
+
+    let mut vector13 = vec![1, 2, 3, 4, 5];
+    let removed = vector13.remove(2);
+
+    match removed {
+        Some(removed) => println!("The removed element is: {}", removed),
+        None => println!("There is no element to remove"),
+    }
+
+    println!("... we can use the `len` method to get the number of elements in a vector ...");
+
+    let vector14 = vec![1, 2, 3, 4, 5];
+    let length = vector14.len();
+    println!("The length of vector14 is: {}", length);
+
+    println!("... we can use the `is_empty` method to check if a vector is empty ...");
+
+    let vector15 = vec![1, 2, 3, 4, 5];
+    let is_empty = vector15.is_empty();
+    println!("Is vector15 empty? {}", is_empty);
+
+    let vector16 = Vec::new();
+    let is_empty = vector16.is_empty();
+
+    println!("Is vector16 empty? {}", is_empty);
+
+    println!("... we can use the `contains` method to check if a vector contains a specific element ...");
+
+    let vector17 = vec![1, 2, 3, 4, 5];
+    let contains = vector17.contains(&3);
+    println!("Does vector17 contain 3? {}", contains);
+
+    let contains = vector17.contains(&6);
+
+    println!("Does vector17 contain 6? {}", contains);
+
+    println!("... we can get the last item in a vector using the `last` method ...");
+
+    let vector18 = vec![1, 2, 3, 4, 5];
+    let last = vector18.last();
+
+    match last {
+        Some(last) => println!("The last element of vector18 is: {}", last),
+        None => println!("There is no last element in vector18"),
+    }
+
+    println!("==============================================================");
     println!("====                    Using Enum                        ====");
     println!("==============================================================");
 

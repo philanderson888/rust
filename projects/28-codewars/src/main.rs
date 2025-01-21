@@ -120,6 +120,68 @@ fn main() {
     let likes_string = get_likes_string(&names);
     println!("{}", likes_string);
 
+    println!("==============================================================");
+    println!("====                    Score The Dice                    ====");
+    println!("==============================================================");
+
+    println!("... given five six-sided dice, score the roll ...");
+    println!("... 3 x 1 = 1000 points, 3 x 6 = 600 points, 3 x 5 = 500 points, 3 x 4 = 400 points, 3 x 3 = 300 points, 3 x 2 = 200 points ...");
+
+    let dice_rolls = [2, 3, 4, 6, 2];
+    let combined_dice_score = get_dice_score(&dice_rolls);
+    println!("combined dice score is {}", combined_dice_score);
+
+    let dice_rolls = [4, 4, 4, 3, 3];
+    let combined_dice_score = get_dice_score(&dice_rolls);
+    println!("combined dice score is {}", combined_dice_score);
+
+    let dice_rolls = [2, 4, 4, 5, 4];
+    let combined_dice_score = get_dice_score(&dice_rolls);
+    println!("combined dice score is {}", combined_dice_score);
+
+    println!("==============================================================");
+    println!("====          Find Pairs Which Add To Given Sum           ====");
+    println!("==============================================================");
+
+    println!("... given a list of integers and a sum, find the pairs that add to the sum ...");
+
+    let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    let sum = 10;
+    let pairs = find_pairs_that_add_to_sum(&numbers, sum);
+    println!("pairs that add to sum {} are {:?}", sum, pairs);
+
+    #[cfg(test)]
+    assert_eq!(pairs, vec![(1, 9), (2, 8), (3, 7), (4, 6)]);
+
+    println!("==============================================================");
+    println!("====         Find First Pair Which Add To Given Sum       ====");
+    println!("==============================================================");
+
+    println!("... given a list of integers and a sum, find the first pair that adds to the sum ...");
+    println!("... the first pair is determined by the lowest index of the second item in the pair ...");
+
+    let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    let sum = 10;
+    let pair = find_first_pair_that_adds_to_sum(&numbers, sum);
+    println!("first pair that adds to sum {} is {:?}", sum, pair);
+    assert_eq!(pair, Some((4, 6)));
+
+    let numbers = [11,3,7,5];
+    let sum = 10;
+    let pair = find_first_pair_that_adds_to_sum(&numbers, sum);
+    println!("first pair that adds to sum {} is {:?}", sum, pair);
+    assert_eq!(pair, Some((3, 7)));
+
+    println!("==============================================================");
+    println!("====           Simplify Compass Directions                ====");
+    println!("==============================================================");
+
+    println!("... given a list of compass directions, simplify the list ...");
+
+    let directions = [Direction::North, Direction::South, Direction::South, Direction::East, Direction::West, Direction::North, Direction::West];
+    let simplified_directions = get_simplified_directions(&directions);
+    println!("simplified directions are {:?}", simplified_directions);
+
 }
 
 fn create_phone_number(numbers: &[u8]) -> String {
@@ -234,4 +296,144 @@ fn get_likes_string(names: &Vec<&str>) -> String {
         3 => format!("{}, {} and {} like this", names[0], names[1], names[2]),
         _ => format!("{}, {} and {} others like this", names[0], names[1], names.len() - 2),
     }
+}
+
+fn get_dice_score(dice: &[i32]) -> i32 {
+
+    println!("input - 5 diced are {:?}", dice);
+
+    let mut score = 0;
+    // sort the array
+    let mut sorted_dice = dice.to_vec();
+    sorted_dice.sort();
+
+    // check for 3 of a kind
+    let mut three_of_a_kind = false;
+    let mut three_of_a_kind_index = 0;
+    for i in 0..sorted_dice.len() {
+        if i + 2 < sorted_dice.len() && sorted_dice[i] == sorted_dice[i + 1] && sorted_dice[i] == sorted_dice[i + 2] {
+            match sorted_dice[i] {
+                1 => score += 1000,
+                2 => score += 200,
+                3 => score += 300,
+                4 => score += 400,
+                5 => score += 500,
+                6 => score += 600,
+                _ => (),
+            }
+            three_of_a_kind = true;
+            three_of_a_kind_index = i;
+            break;
+        }
+    }
+
+    // remove three of a kind from the array if found
+    if three_of_a_kind {
+        sorted_dice.remove(three_of_a_kind_index);
+        sorted_dice.remove(three_of_a_kind_index);
+        sorted_dice.remove(three_of_a_kind_index);
+    }
+
+    // check for 1s and 5s
+    for die in sorted_dice {
+        match die {
+            1 => score += 100,
+            5 => score += 50,
+            _ => (),
+        }
+    }
+
+    println!("score: {}", score);
+
+    score
+
+}
+
+fn find_pairs_that_add_to_sum(numbers: &[i32], sum: i32) -> Vec<(i32, i32)> {
+    let mut pairs = Vec::new();
+    for i in 0..numbers.len() {
+        for j in i+1..numbers.len() {
+            if numbers[i] + numbers[j] == sum {
+                pairs.push((numbers[i], numbers[j]));
+            }
+        }
+    }
+    println!("pairs that add to sum {} are {:?}", sum, pairs);
+    pairs
+}
+
+fn find_first_pair_that_adds_to_sum(numbers: &[i32], sum: i32) -> Option<(i32, i32)> {
+
+    let mut pair_with_index = (0, 0, 0);
+    let mut pair_found = false;
+    let mut break_all = false;
+
+    for i in 0..numbers.len() {
+        for j in i+1..numbers.len() {
+            if i > j || (pair_found && i > pair_with_index.2){
+                break_all = true;
+                break;
+            }
+            if numbers[i] + numbers[j] == sum {
+                if pair_with_index.2 == 0 || j < pair_with_index.2 {
+                    pair_with_index = (numbers[i], numbers[j], j);
+                    pair_found = true;
+                }
+            }
+        }
+        if break_all {
+            break;
+        }
+    }
+    if pair_with_index.2 == 0 {
+        None
+    } else {
+        Some((pair_with_index.0, pair_with_index.1))
+    }
+}
+
+#[derive(Debug, PartialEq)]
+enum Direction {
+    North,
+    South,
+    East,
+    West,
+}
+
+fn get_simplified_directions(directions: &[Direction]) -> Vec<Direction> {
+    let mut simplified_directions = Vec::new();
+    for direction in directions {
+        let last_direction = simplified_directions.last();
+        match direction {
+            Direction::North => {
+                if last_direction == Some(&Direction::South) {
+                    simplified_directions.pop();
+                } else {
+                    simplified_directions.push(Direction::North);
+                }
+            }
+            Direction::South => {
+                if last_direction == Some(&Direction::North) {
+                    simplified_directions.pop();
+                } else {
+                    simplified_directions.push(Direction::South);
+                }
+            }
+            Direction::East => {
+                if last_direction == Some(&Direction::West) {
+                    simplified_directions.pop();
+                } else {
+                    simplified_directions.push(Direction::East);
+                }
+            }
+            Direction::West => {
+                if last_direction == Some(&Direction::East) {
+                    simplified_directions.pop();
+                } else {
+                    simplified_directions.push(Direction::West);
+                }
+            }
+        }
+    }
+    simplified_directions
 }
