@@ -206,6 +206,85 @@ fn main() {
 
     println!("... the array slice points to the first element and provides the length of the slice, that is all that is required\n");
 
+    println!("==============================================================");
+    println!("====         Passing Arrays Into Functions                ====");
+    println!("==============================================================");
+
+    println!("... note that arrays are passed by reference into functions\n");
+
+    let array02 = [1, 2, 3, 4, 5];
+    let array_slice02 = &array02[1..3];
+    let sum = sum_array(array_slice02);
+    println!("The sum of the array slice {:?} of length {} is {}", array_slice02, array_slice02.len(), sum);
+
+    let sum = sum_array(&array02);
+    println!("The sum of the array {:?} of length {} is {}", array02, array02.len(), sum);
+
+
+    println!("\n... also note that if we passed the actual array into the function ... ");
+    println!("... then we also have to pass in the size of the array as a parameter ... \n");
+    // let sum = sum_array(array02); // This will not work
+    let sum = sum_array_taking_ownership(array02);
+    println!("The sum of the array {:?} of length {} is {}", array02, array02.len(), sum);
+
+    println!("... also say the array was of positive integers only we could use the 'u8/u16/u32' types\n");
+    let array03 = [1, 2, 3, 200, 5];
+    let sum = sum_array_taking_ownership_u8_type(array03);
+    println!("The sum of the array {:?} of length {} is {}", array03, array03.len(), sum);
+
+    println!("==============================================================");
+    println!("====         Passing Vectors Into Functions               ====");
+    println!("==============================================================");
+
+    println!("... note that vectors are passed by reference into functions\n");
+
+    let vector01 = vec![1, 2, 3, 4, 5];
+    let vector_slice01 = &vector01[1..3];
+    let sum = sum_vector(vector_slice01);
+    println!("The sum of the vector slice {:?} of length {} is {}", vector_slice01, vector_slice01.len(), sum);
+
+    let sum = sum_vector(&vector01);
+    println!("The sum of the vector {:?} of length {} is {}", vector01, vector01.len(), sum);
+
+    println!("\n... we can also pass ownership of the vector into the function ... instead of passing a reference ... ");
+    println!("The sum of the vector {:?} of length {} ... is ... ", vector01, vector01.len());
+    let sum = sum_vector_taking_ownership(vector01);
+    println!("... {}", sum);
+
+    println!("\n... we can also try with a vector of strings ... ");
+    let names = vec!["Alex", "Jacob", "Mark", "Max"];
+    let likes_string = get_likes_string(&names);
+    println!("{}", likes_string);
+
+    println!("... the equivalent with an array of strings would be ... ");
+    let names = ["Alex", "Jacob", "Mark", "Max"];
+    let likes_string = get_likes_string_from_array(&names);
+    println!("{}", likes_string);
+
+}
+
+fn sum_array(array_slice: &[i32]) -> i32 {
+    let mut sum = 0;
+    for &item in array_slice.iter() {
+        sum += item;
+    }
+    sum
+}
+
+fn sum_array_taking_ownership(array: [i32; 5]) -> i32 {
+    let mut sum = 0;
+    for &item in array.iter() {
+        sum += item;
+    }
+    sum
+}
+
+fn sum_array_taking_ownership_u8_type(array: [u8; 5]) -> u8 {
+    let mut sum = 0;
+    for &item in array.iter() {
+        sum += item;
+    }
+    sum
 }
 
 fn takes_ownership(some_string: String) { // some_string comes into scope
@@ -277,4 +356,40 @@ fn find_first_slice_from_slice(long_slice: &str) -> &str {
     }
     println!("No space character found");
     return &long_slice[..];
+}
+
+fn sum_vector(vector_slice: &[i32]) -> i32 {
+    let mut sum = 0;
+    for &item in vector_slice.iter() {
+        sum += item;
+    }
+    sum
+}
+
+fn sum_vector_taking_ownership(vector: Vec<i32>) -> i32 {
+    let mut sum = 0;
+    for item in vector {
+        sum += item;
+    }
+    sum
+}
+
+fn get_likes_string(names: &Vec<&str>) -> String {
+    match names.len() {
+        0 => "no one likes this".to_string(),
+        1 => format!("{} likes this", names[0]),
+        2 => format!("{} and {} like this", names[0], names[1]),
+        3 => format!("{}, {} and {} like this", names[0], names[1], names[2]),
+        _ => format!("{}, {} and {} others like this", names[0], names[1], names.len() - 2),
+    }
+}
+
+fn get_likes_string_from_array(names: &[&str]) -> String {
+    match names.len() {
+        0 => "no one likes this".to_string(),
+        1 => format!("{} likes this", names[0]),
+        2 => format!("{} and {} like this", names[0], names[1]),
+        3 => format!("{}, {} and {} like this", names[0], names[1], names[2]),
+        _ => format!("{}, {} and {} others like this", names[0], names[1], names.len() - 2),
+    }
 }

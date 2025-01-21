@@ -28,7 +28,7 @@ fn main() {
 
     println!("Closures are anonymous functions that can capture their environment");
     println!("... they can capture values from the scope in which they are defined");
-    println!("function outer(){  let x = 10; function inner(){  return x;  }  return inner;  } ... will return the value of x ... ");
+    println!("function outer ... x = 10 function inner ... return x ... return inner ... will return the value of x ... ");
 
     let x = 4;
 
@@ -359,6 +359,68 @@ fn main() {
 
     println!("... rust performs all checks at compile time so run time performance is not affected");
 
+    println!("==============================================================");
+    println!("==============================================================");
+    println!("====                 Further Examples                     ====");
+    println!("==============================================================");
+    println!("==============================================================");
+
+    println!("==============================================================");
+    println!("====        Filtering An Array Using An Iterator          ====");
+    println!("==============================================================");
+
+    let numbers = [10,20,30,40,50,60,70,80,90,100];
+
+    println!("... say we wanted to filter this array to only include numbers greater than 50 ...");
+    println!("... note that vec<_> is a wildcard operator that allows the compiler to infer the type of the vector ...");
+    println!("... so this reads ... collect the filtered output into a vector of inferred type using the numbers array as input ... ");
+
+    let greater_than_fifty: Vec<_> = numbers.iter().filter(|&&x| x > 50).collect();
+    println!("... the numbers greater than 50 are {:?}", greater_than_fifty);
+
+    println!("... say we wanted to return the highest or lowest number in the array ...");
+    println!("... we can use the max and min methods ...");
+    let max_number = numbers.iter().max();
+    let min_number = numbers.iter().min();
+    println!("... the max number is {:?}", max_number);
+    println!("... the min number is {:?}", min_number);
+
+    println!("... say we wanted to sum the numbers in the array ...");
+    println!("... we can use the sum method ...");
+    let array_sum: i32 = numbers.iter().sum();
+    println!("... the sum of the numbers is {:?}", array_sum);
+
+    println!("... say we wanted to find the number of items in the array ...");
+    println!("... we can use the count method ...");
+    let number_of_items = numbers.iter().count();
+    println!("... the number of items in the array is {:?}", number_of_items);
+
+    println!("... say we wanted to find the average of the numbers in the array ...");
+    println!("... we can use the sum and count methods ...");
+    let average = numbers.iter().sum::<i32>() as f64 / numbers.iter().count() as f64;
+    println!("... the average of the numbers is {:?}", average);
+
+    println!("\n... we can also reverse the iterator / array ...");
+    let reversed: Vec<_> = numbers.iter().rev().collect();
+    println!("... the reversed array is {:?}", reversed);
+
+    println!("\n... we can also skip the first n items in the array ...");
+    let skipped: Vec<_> = numbers.iter().skip(3).collect();
+    println!("... the array with the first 3 items skipped is {:?}", skipped);
+
+    println!("\n... we can also take the first n items in the array ...");
+    let taken: Vec<_> = numbers.iter().take(3).collect();
+    println!("... the array with only the first 3 items is {:?}", taken);
+
+    println!("==============================================================");
+    println!("====                  Mapping An Array                    ====");
+    println!("==============================================================");
+
+    let numbers = [1, 2, 3, 4, 5];
+    println!("... say we wanted to double each number in the array ...");
+    let doubled: Vec<_> = numbers.iter().map(|&x| x * 2).collect();
+    println!("... the doubled numbers are {:?}", doubled);
+    
 
 }
 
