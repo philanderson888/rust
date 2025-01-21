@@ -17,5 +17,7 @@ fn main() {
     println!("... - associated types eg type Item;");
     println!("... - associated constants eg const MAX_ITEMS: u32;");
     println!("... - associated functions eg fn new() -> Self;");
+
+    
     
 }
