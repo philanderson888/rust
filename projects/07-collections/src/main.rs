@@ -73,6 +73,11 @@ fn main() {
     println!("\nalso be aware if a reference to to an element is held, the vector cannot be mutated");
     println!("... the picture of this is that we should not add rungs to a ladder while standing on it ...\n");
 
+    println!("... to generate a vector from a list of numbers we can use the `vec!` macro ...");
+    let max = 50;
+    let list_of_numbers: Vec<i32> = (1..=max).collect();
+    println!("list_of_numbers: {:?}", list_of_numbers);
+
     println!("==============================================================");
     println!("====                    Iterating                         ====");
     println!("==============================================================");
@@ -105,12 +110,12 @@ fn main() {
     println!("... we can convert an array to a vector using the `to_vec` method ...");
 
     let array06 = [1, 2, 3, 4, 5];
-    let vector06 = array06.to_vec();
+    let _vector06 = array06.to_vec();
     println!("array06: {:?}", array06);
 
     println!("\n... we can also use the `to_vec` method to convert a slice to a vector ...");
     let slice07 = &array06[1..4];
-    let vector07 = slice07.to_vec();
+    let _vector07 = slice07.to_vec();
     println!("slice07: {:?}", slice07);
 
     println!("==============================================================");
@@ -162,12 +167,12 @@ fn main() {
     println!("... we can use the `remove` method to remove an element at a specific index in a vector ...");
 
     let mut vector13 = vec![1, 2, 3, 4, 5];
-    let removed = vector13.remove(2);
+    let _removed = vector13.remove(2);
 
-    match removed {
-        Some(removed) => println!("The removed element is: {}", removed),
-        None => println!("There is no element to remove"),
-    }
+    //match removed {
+    //    Some(removed) => println!("The removed element is: {}", removed),
+    //    None => println!("There is no element to remove"),
+   // }
 
     println!("... we can use the `len` method to get the number of elements in a vector ...");
 
@@ -181,7 +186,8 @@ fn main() {
     let is_empty = vector15.is_empty();
     println!("Is vector15 empty? {}", is_empty);
 
-    let vector16 = Vec::new();
+    let vector16: Vec<i32> = Vec::new();
+
     let is_empty = vector16.is_empty();
 
     println!("Is vector16 empty? {}", is_empty);
