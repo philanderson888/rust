@@ -1,6 +1,8 @@
 use std::fs::{self, File, OpenOptions};
 use std::io::{self, Read, Write, ErrorKind};
 
+use rusqlite::{params, Connection, Result};
+
 fn main() {
 
     println!("==============================================================");
@@ -319,6 +321,27 @@ fn main() {
     println!("Guess: {}", guess.value);
 
     println!("==============================================================");
+    println!("====                 Ignoring Fields                      ====");
+    println!("==============================================================");
+
+    println!("... we can ignore fields in a <Result> object by using _ or ..");
+
+    let conn = initialize_database();
+
+    match conn {
+        Ok(_) => println!("Database initialized"),
+        Err(e) => println!("Error initializing database: {:?}", e),
+    }
+
+    let conn = initialize_database();
+
+    match conn {
+        Ok(..) => println!("Database initialized"),
+        Err(_) => println!("Error initializing database"),
+    }
+
+
+    println!("==============================================================");
     println!("====                      Summary                         ====");
     println!("==============================================================");
 
@@ -390,4 +413,16 @@ fn read_username_from_file_shorter() -> Result<String, io::Error> {
 
 fn read_username_from_file_shortest() -> Result<String, io::Error> {
     fs::read_to_string("Hello.txt")
+}
+
+fn initialize_database() -> Result<Connection> {
+    let conn = Connection::open("counter.db")?;
+    conn.execute(
+        "CREATE TABLE IF NOT EXISTS counter (
+            id INTEGER PRIMARY KEY,
+            value INTEGER NOT NULL
+        )",
+        [],
+    )?;
+    Ok(conn)
 }
