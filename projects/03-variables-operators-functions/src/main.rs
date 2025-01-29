@@ -112,6 +112,14 @@ fn main() {
 
     println!("The value of float_64_bit is: {}", float_64_bit);
 
+    println!("... to convert from an integer to a float we can use the 'as' keyword ...");
+
+    let integer_32_bit: i32 = 1000;
+
+    let float_32_bit = integer_32_bit as f32;
+
+    println!("The value of float_32_bit is: {}", float_32_bit);
+
     println!("==============================================================");
     println!("====                     Booleans                         ====");
     println!("==============================================================");
