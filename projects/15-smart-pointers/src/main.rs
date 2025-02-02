@@ -54,6 +54,18 @@ fn main() {
     println!("\nreference cycles are also discussed as they can cause memory leaks");
 
     println!("\n\n==============================================================");
+    println!("====                 Pointer Memory Address               ====");
+    println!("==============================================================");
+    let my_string = "here is a string";
+    let my_str = &my_string[0..7];
+    // & is an address pointer reference to the actual address in memory where this variable is stored
+    // numbers, booleans etc kept on the simple memory called the 'stack' ... 
+    // strings and more complex objects kept in the more complex and larger memory called the 'heap'
+    // a 'pointer' reference is a hexadecimal eg 0xABCED012345 .... stright to where data is stored
+    println!("the pointer address to the string slice '''{}''' looks like this {:p}", my_str, my_str);
+
+
+    println!("\n\n==============================================================");
     println!("====                      Box<T>                          ====");
     println!("==============================================================");
 
