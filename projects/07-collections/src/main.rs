@@ -8,6 +8,19 @@ fn main() {
     println!("==============================================================");
     println!("==============================================================");
 
+    println!("... we have already looked at arrays ... let's develop this with collections ... ");
+
+    println!("==============================================================");
+    println!("====                     Arrays                           ====");
+    println!("==============================================================");
+    let mut array = [5,4,3,2,1];
+    array.sort();
+    println!("... sorted array {:?}", array);
+
+    println!("==============================================================");
+    println!("====                    Collections                       ====");
+    println!("==============================================================");
+
     println!("collections can be summarised as: ");
     println!("1. Vectors: store a variable number of values next to each other");
     println!("2. Strings: store a collection of characters");
@@ -606,3 +619,4 @@ fn main() {
     println!("==============================================================");
 
 }
+
