@@ -405,6 +405,26 @@ fn main() {
     let tends_to = tends_to_infinity_or_zero(sequence);
     println!("sequence {} tends to {}", sequence, tends_to);
 
+    println!("==============================================================");
+    println!("====               Convert Seconds To Time                ====");
+    println!("==============================================================");
+
+    println!("... given a number of seconds, return the time in the format 'hours:minutes:seconds' ...");
+
+    let seconds = 0;
+    let time = convert_seconds_to_time(seconds);
+
+    println!("time for {} seconds is {}", seconds, time);
+
+    let seconds = 5;
+    let time = convert_seconds_to_time(seconds);
+
+    println!("time for {} seconds is {}", seconds, time);
+
+    let seconds = 86399;
+    let time = convert_seconds_to_time(seconds);
+
+    println!("time for {} seconds is {}", seconds, time);
 
 }
 
@@ -1237,7 +1257,7 @@ fn tends_to_infinity_or_zero(sequence: i32) -> f32 {
             break;
         }
 
-        if counter > 30 {
+        if counter > 18 {
             break;
         }
     }
@@ -1250,4 +1270,13 @@ struct Factorial {
     number: u64,
     factorial: u64,
     sum: u64,
+}
+
+fn convert_seconds_to_time(seconds: u32) -> String {
+
+    let hours = seconds / 3600;
+    let minutes = (seconds % 3600) / 60;
+    let seconds = seconds % 60;
+
+    format!("{:02}:{:02}:{:02}", hours, minutes, seconds)
 }
