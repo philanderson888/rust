@@ -430,20 +430,54 @@ fn main() {
     println!("====             Check Sum Of Ticket Digits               ====");
     println!("==============================================================");
 
-    let is_lucky = check_sum_of_ticket_digits(1230);
-    println!("ticket number 1230 is lucky: {}", is_lucky);
+    println!("... given a ticket as a string");
+    println!("... return an error if the string is empty ...");
+    println!("... return error if non-numberic digits are present ...");
+    println!("... convert the string to numeric digits ...");
+    println!("... if the length is even then return true if the sum of the first half of the digits is equal to the sum of the second half ...");
+    println!("... if the length is odd then ignore the middle digit ... and repeat the same process ...\n");
 
-    let is_lucky = check_sum_of_ticket_digits(239017);
-    println!("ticket number 239017 is lucky: {}", is_lucky);
-
-    let is_lucky = check_sum_of_ticket_digits_option(134008);
-
+    let ticket = "134008";
+    let is_lucky = check_sum_of_ticket_digits(ticket.to_string());
     match is_lucky {
         Some(value) => {
-            println!("ticket number 239017 is lucky: {}", value);
+            println!("ticket {} is lucky: {}\n", ticket, value);
         },
         None => {
-            println!("... ticket number 239017 is invalid ... ");
+            println!("... ticket {} is invalid\n", ticket);
+        }
+    }
+
+    let ticket = "683179";
+    let is_lucky = check_sum_of_ticket_digits(ticket.to_string());
+    match is_lucky {
+        Some(value) => {
+            println!("ticket {} is lucky: {}\n", ticket, value);
+        },
+        None => {
+            println!("... ticket {} is invalid\n", ticket);
+        }
+    }
+
+    let ticket = "6832179";
+    let is_lucky = check_sum_of_ticket_digits(ticket.to_string());
+    match is_lucky {
+        Some(value) => {
+            println!("ticket {} is lucky: {}\n", ticket, value);
+        },
+        None => {
+            println!("... ticket {} is invalid\n", ticket);
+        }
+    }
+
+    let ticket = "683A179";
+    let is_lucky = check_sum_of_ticket_digits(ticket.to_string());
+    match is_lucky {
+        Some(value) => {
+            println!("ticket {} is lucky: {}\n", ticket, value);
+        },
+        None => {
+            println!("... ticket {} is invalid\n", ticket);
         }
     }
 
@@ -1301,55 +1335,55 @@ fn convert_seconds_to_time(seconds: u32) -> String {
     format!("{:02}:{:02}:{:02}", hours, minutes, seconds)
 }
 
-fn check_sum_of_ticket_digits(ticket_as_number: i32) -> bool {
+fn check_sum_of_ticket_digits(ticket: String) -> Option<bool> {
 
-    println!("... given a ticket number, return true if the sum of the first half of the digits is equal to the sum of the second half ...");
+    if ticket.len() == 0 {
+        return None;
+    }
 
-    let ticket_as_string = ticket_as_number.to_string();
-
-    let ticket = ticket_as_string;
-    let ticket_as_digits = ticket.chars().map(|c| c.to_digit(10).unwrap()).collect::<Vec<u32>>();
-
-    let mut sum_of_first_half = 0;
-    let mut sum_of_second_half = 0;
-
-    for (index, digit) in ticket_as_digits.iter().enumerate() {
-        if index < 3 {
-            sum_of_first_half += digit;
-        } else {
-            sum_of_second_half += digit;
+    for character in ticket.chars() {
+        if !character.is_numeric() {
+            return None;
         }
     }
 
-    sum_of_first_half == sum_of_second_half
+    let ticket_length = ticket.len();
+    println!("ticket length is {}", ticket_length);
 
-}
+    let ticket_length_is_even = ticket_length % 2 == 0;
 
+    let half_length = ticket_length / 2;
+    println!("half length is {}", half_length);
 
+    let mut first_half_sum = 0;
+    let mut second_half_sum = 0;
 
-fn check_sum_of_ticket_digits_option(ticket_as_number: i32) -> Option<bool> {
-
-    println!("... given a ticket number, return true if the sum of the first half of the digits is equal to the sum of the second half ...");
-
-    let ticket_as_string = ticket_as_number.to_string();
-
-    let ticket = ticket_as_string;
-    let ticket_as_digits = ticket.chars().map(|c| c.to_digit(10).unwrap()).collect::<Vec<u32>>();
-
-    let mut sum_of_first_half = 0;
-    let mut sum_of_second_half = 0;
-
-    for (index, digit) in ticket_as_digits.iter().enumerate() {
-        if index < 3 {
-            sum_of_first_half += digit;
-        } else {
-            sum_of_second_half += digit;
+    if ticket_length_is_even {
+        for (index, character) in ticket.chars().enumerate() {
+            if index < half_length {
+                first_half_sum += character.to_digit(10).unwrap();
+            } else {
+                second_half_sum += character.to_digit(10).unwrap();
+            }
+        }
+    } else {
+        for (index, character) in ticket.chars().enumerate() {
+            if index < half_length {
+                first_half_sum += character.to_digit(10).unwrap();
+            } else if index > half_length {
+                second_half_sum += character.to_digit(10).unwrap();
+            }
         }
     }
 
-    let is_lucky = sum_of_first_half == sum_of_second_half;
+    println!("first half sum is {}", first_half_sum);
+    println!("second half sum is {}", second_half_sum);
 
-    Some(is_lucky)
+    if first_half_sum == second_half_sum {
+        return Some(true);
+    } else {
+        return Some(false);
+    }
 
 }
 
