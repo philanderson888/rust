@@ -426,6 +426,27 @@ fn main() {
 
     println!("time for {} seconds is {}", seconds, time);
 
+    println!("==============================================================");
+    println!("====             Check Sum Of Ticket Digits               ====");
+    println!("==============================================================");
+
+    let is_lucky = check_sum_of_ticket_digits(1230);
+    println!("ticket number 1230 is lucky: {}", is_lucky);
+
+    let is_lucky = check_sum_of_ticket_digits(239017);
+    println!("ticket number 239017 is lucky: {}", is_lucky);
+
+    let is_lucky = check_sum_of_ticket_digits_option(134008);
+
+    match is_lucky {
+        Some(value) => {
+            println!("ticket number 239017 is lucky: {}", value);
+        },
+        None => {
+            println!("... ticket number 239017 is invalid ... ");
+        }
+    }
+
 }
 
 fn create_phone_number(numbers: &[u8]) -> String {
@@ -1146,14 +1167,11 @@ fn josephus_problem(n: i32, step: i32) -> String {
     eliminated_people_string
 }
 
-fn tends_to_infinity_or_zero(sequence: i32) -> f32 {
+fn tends_to_infinity_or_zero(_sequence: i32) -> f32 {
 
-    let mut output = 0.0;
+    let mut output = 1.0;
+    let mut counter = 1;
 
-    let mut counter = 0;
-
-    counter = 1;
-    output = 1.0;
     println!("tend to infinity ... count ... {} ... output ... {}", counter, output);
 
     let integer_32_bit: i32 = 1000;
@@ -1205,11 +1223,13 @@ fn tends_to_infinity_or_zero(sequence: i32) -> f32 {
     let output = 1.0 / factorial_9_as_f32 * (1 + 2 + 6 + 24 + factorial_5 + factorial_6 + factorial_7 + factorial_8 + factorial_9) as f32;
     println!("tend to infinity ... count ... {} ... output ... {}", counter, output);
     
-    let factorial_instance = Factorial {
+    let _factorial_instance = Factorial {
         number: 9,
         factorial: factorial_9,
         sum: 1 + 2 + 6 + 24 + factorial_5 + factorial_6 + factorial_7 + factorial_8 + factorial_9,
     };
+
+    println!("factorial instance is number {} factorial {} sum {}", _factorial_instance.number, _factorial_instance.factorial, _factorial_instance.sum);
 
     let mut factorials = vec![
         Factorial { number: 1, factorial: 1, sum: 1 },
@@ -1224,7 +1244,7 @@ fn tends_to_infinity_or_zero(sequence: i32) -> f32 {
     ];
 
     let minimum_delta = 0.01;
-    let mut output_delta = output_previous - output;
+    let output_delta = output_previous - output;
 
     println!("output delta is {}", output_delta);
     println!("minimum delta is {}", minimum_delta);
@@ -1236,7 +1256,7 @@ fn tends_to_infinity_or_zero(sequence: i32) -> f32 {
         let last_sum = last_factorial_instance.sum;
 
         let factorial = last_factorial_instance.factorial * counter;
-        let factorial_as_f32 = factorial as f32;
+        let _factorial_as_f32 = factorial as f32;
         let sum = last_sum + factorial;
 
         let factorial_instance = Factorial {
@@ -1280,3 +1300,56 @@ fn convert_seconds_to_time(seconds: u32) -> String {
 
     format!("{:02}:{:02}:{:02}", hours, minutes, seconds)
 }
+
+fn check_sum_of_ticket_digits(ticket_as_number: i32) -> bool {
+
+    println!("... given a ticket number, return true if the sum of the first half of the digits is equal to the sum of the second half ...");
+
+    let ticket_as_string = ticket_as_number.to_string();
+
+    let ticket = ticket_as_string;
+    let ticket_as_digits = ticket.chars().map(|c| c.to_digit(10).unwrap()).collect::<Vec<u32>>();
+
+    let mut sum_of_first_half = 0;
+    let mut sum_of_second_half = 0;
+
+    for (index, digit) in ticket_as_digits.iter().enumerate() {
+        if index < 3 {
+            sum_of_first_half += digit;
+        } else {
+            sum_of_second_half += digit;
+        }
+    }
+
+    sum_of_first_half == sum_of_second_half
+
+}
+
+
+
+fn check_sum_of_ticket_digits_option(ticket_as_number: i32) -> Option<bool> {
+
+    println!("... given a ticket number, return true if the sum of the first half of the digits is equal to the sum of the second half ...");
+
+    let ticket_as_string = ticket_as_number.to_string();
+
+    let ticket = ticket_as_string;
+    let ticket_as_digits = ticket.chars().map(|c| c.to_digit(10).unwrap()).collect::<Vec<u32>>();
+
+    let mut sum_of_first_half = 0;
+    let mut sum_of_second_half = 0;
+
+    for (index, digit) in ticket_as_digits.iter().enumerate() {
+        if index < 3 {
+            sum_of_first_half += digit;
+        } else {
+            sum_of_second_half += digit;
+        }
+    }
+
+    let is_lucky = sum_of_first_half == sum_of_second_half;
+
+    Some(is_lucky)
+
+}
+
