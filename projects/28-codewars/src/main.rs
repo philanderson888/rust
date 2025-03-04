@@ -481,6 +481,23 @@ fn main() {
         }
     }
 
+    println!("==============================================================");
+    println!("====                 Caesar Cipher                        ====");
+    println!("==============================================================");
+
+    println!("... given a string and a shift, return the string shifted by the shift ...");
+    println!("... if something is in the string but not alphabetic, leave it as is ...");
+    println!("... example ... Codewars shifted by 5 is HTIJBFWX ...");
+    println!("... BFKKQJX shifted by 5 is WAFFLES ...");
+
+    let shift = 5 as u32;
+    let ceasar_string = "Codewars";
+    let ceasar_cipher = CaesarCipher::new(shift);
+    let encoded_string = ceasar_cipher.encode(ceasar_string);
+    println!("encoded string for {} shifted by {} is {}", ceasar_string, shift, encoded_string);
+    let decoded_string = ceasar_cipher.decode(&encoded_string);
+    println!("decoded string for {} shifted by {} is {}", encoded_string, shift, decoded_string);
+
 }
 
 fn create_phone_number(numbers: &[u8]) -> String {
@@ -1384,6 +1401,78 @@ fn check_sum_of_ticket_digits(ticket: String) -> Option<bool> {
     } else {
         return Some(false);
     }
+}
 
+struct CaesarCipher {
+    shift: u32,
+}
+
+fn encode_string(string: &str, shift: u32) -> String {
+
+    let mut encoded_string = String::new();
+
+    for character in string.chars() {
+
+        if !character.is_alphabetic() {
+            encoded_string.push(character);
+            println!("input character {} output character {}", character, character);
+            continue;
+        }
+
+        let character_as_uppercase = character.to_ascii_uppercase();
+        let character_as_int = character_as_uppercase as u32;
+        let mut shifted_character_as_int = character_as_int + shift;
+        if shifted_character_as_int > 90 {
+            shifted_character_as_int -= 26;
+        }
+        let shifted_character = shifted_character_as_int as u8 as char;
+        println!("input character {} output character {}", character, shifted_character);
+        encoded_string.push(shifted_character);
+    }
+
+    println!("input string {} output string {}", string, encoded_string);
+    encoded_string
+}
+
+fn decode_string(string: &str, shift: u32) -> String {
+
+    let mut decoded_string = String::new();
+
+    for character in string.chars() {
+
+        if !character.is_alphabetic() {
+            decoded_string.push(character);
+            println!("input character {} output character {}", character, character);
+            continue;
+        }
+
+        let character_as_uppercase = character.to_ascii_uppercase();
+        let character_as_int = character_as_uppercase as u32;
+        let mut shifted_character_as_int = character_as_int - shift;
+        if shifted_character_as_int < 65 {
+            shifted_character_as_int += 26;
+        }
+        let shifted_character = shifted_character_as_int as u8 as char;
+        println!("input character {} output character {}", character, shifted_character);
+        decoded_string.push(shifted_character);
+    }
+
+    println!("input string {} output string {}", string, decoded_string);
+    decoded_string
+
+}
+
+impl CaesarCipher {
+    fn new(shift: u32) -> CaesarCipher {
+        CaesarCipher { shift }
+    }
+
+    fn encode(&self, string: &str) -> String {
+        encode_string(string, self.shift)
+    }
+
+    fn decode(&self, string: &str) -> String {
+        decode_string(string, self.shift)
+    }
 }
 
