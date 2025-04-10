@@ -225,6 +225,18 @@ fn main() {
         None => println!("There is no last element in vector18"),
     }
 
+    println!("===============================================================");
+    println!("====             Filling A Vector With Values                     ====");
+    println!("===============================================================");
+
+    println!("... we can use the `fill` method to fill a vector with a specific value ...");
+    let mut vector19 = vec![0; 5];
+    println!("vector19: {:?}", vector19);
+    vector19.fill(1);
+    println!("vector19: {:?}", vector19);
+
+    
+
     println!("==============================================================");
     println!("====                    Using Enum                        ====");
     println!("==============================================================");
