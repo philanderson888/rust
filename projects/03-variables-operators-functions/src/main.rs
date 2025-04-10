@@ -626,6 +626,12 @@ fn main() {
         println!("The value of number is: {}", number);
     }
 
+    println!("... we can make the loop inclusive by using ..= ");
+
+    for number in (1..=4).rev() {
+        println!("The value of number is: {}", number);
+    }
+
     println!("==============================================================");
     println!("====         For Every Element In A Collection            ====");
     println!("==============================================================");
