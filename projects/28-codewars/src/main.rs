@@ -498,7 +498,73 @@ fn main() {
     let decoded_string = ceasar_cipher.decode(&encoded_string);
     println!("decoded string for {} shifted by {} is {}", encoded_string, shift, decoded_string);
 
+
+    println!("==============================================================");
+    println!("====                 Map Filter Reduce                    ====");
+    println!("==============================================================");
+
+    /* 
+        
+        https://www.codewars.com/kata/529a92d9aba78c356b000353/train/rust
+
+        using a base function generate map and filter functions same as in javscript
+        eg array [1,2,3,4,5] 
+        map > x => x * 2 yields [2,4,6,8,10]
+        filter > x => x > 3 yields [4,5]
+
+    */
+    
+    let numbers = Cons::new(1, Cons::new(2, Cons::new(3, Cons::new(4, Cons::new(5, Cons::Null)))));
+    println!("numbers as raw Cons items {:?}", numbers);
+
+    let numbers_as_vec = numbers.to_vec();
+    println!("numbers converted to vector array {:?}", numbers_as_vec);
+
+    let numbers = Cons::from_iter(vec![1,2,3,4,5]);
+    println!("numbers generated from iterator over vector {:?}", numbers);
+
+    let map = |x| x * 2;
+    let mapped_numbers = numbers.map(map);
+    println!("mapped numbers using the mapping {} are {:?}", "x * 2", mapped_numbers);
+
+    let filter = |x: &i32| *x > 3;
+    let filtered_numbers = numbers.filter(filter);
+    println!("filtered numbers using the filter {} are {:?}", "x > 3", filtered_numbers);
+
+    println!("==============================================================");
+    println!("====                    Create Spiral                     ====");
+    println!("==============================================================");
+
+    // given a nxn matrix create a spiral that a snake can follow
+    // minimum size is 5
+    
+    /*
+    
+        observations
+
+            outer walls are all 1 apart from the entry point which is always on row 1 column 0 and moving right
+
+            rule is that you move right until you hit the wall then move down at position row 1 column (n-1)
+            
+            then move down until you hit position row (n-1) column (n-1)
+
+            then move left until you hit position row (n-1) column 1 
+
+            then move up until you hit position row 2 column 1 
+
+            ... then repeat all over again 
+
+            ... we fill with 0 for the walls and 1 for the route taken by the snake
+
+            ... closing position will be ... 
+    */
+
+    let spiral = create_spiral(5);
+
+    println!("spiral is {:?}", spiral);
+
 }
+
 
 fn create_phone_number(numbers: &[u8]) -> String {
     let mut phone_number = String::from("(");
@@ -1476,3 +1542,144 @@ impl CaesarCipher {
     }
 }
 
+#[derive(Debug, PartialEq, Eq)]
+enum Cons<T: Clone> {
+  Cons(T, Box<Cons<T>>),
+  Null
+}
+
+impl<T: Clone> Cons<T> {
+  pub fn new(head: T, tail: Self) -> Self {
+    Cons::Cons(head, Box::new(tail))
+  }
+
+  pub fn to_vec(&self) -> Vec<T> {
+    match self {
+      &Cons::Null => vec![],
+      &Cons::Cons(ref head, ref tail) => {
+        let mut head = vec![head.clone()];
+        head.extend(tail.to_vec());
+        head
+      }
+    }
+  }
+}
+
+impl<T: Clone> Cons<T> {
+  pub fn from_iter<I>(it: I) -> Self
+    where I: IntoIterator<Item=T>
+  {
+    let mut it = it.into_iter();
+    match it.next() {
+      None => Cons::Null,
+      Some(head) => Cons::Cons(head, Box::new(Cons::from_iter(it)))
+    }
+  } 
+
+  pub fn filter<F>(&self, fun: F) -> Self
+    where F: Fn(&T) -> bool
+  {
+
+    match self {
+      &Cons::Null => Cons::Null,
+      &Cons::Cons(ref head, ref tail) => {
+        if fun(head) {
+          Cons::Cons(head.clone(), Box::new(tail.filter(fun)))
+        } else {
+          tail.filter(fun)
+        }
+      }
+    }
+  }
+
+  pub fn map<F,S>(&self, fun: F) -> Cons<S>
+    where F: Fn(T) -> S, S: Clone
+  {
+
+    match self {
+      &Cons::Null => Cons::Null,
+      &Cons::Cons(ref head, ref tail) => {
+        Cons::Cons(fun(head.clone()), Box::new(tail.map(fun)))
+      }
+    }
+
+  }
+}
+
+fn create_spiral(n: usize) -> Vec<Vec<i32>> {
+
+    let mut spiral = vec![vec![0; n as usize]; n as usize];
+
+    if n < 5 {
+        return spiral;
+    }
+
+    spiral[1][0] = 1;
+
+    let mut left = 1;
+    let mut right = n as i32 - 2;
+    let mut top = 1;
+    let mut bottom = n as i32 - 2;
+
+    let mut num = 1;
+
+    let mut exit = false;
+
+    while !exit {
+
+        // going right 
+
+        for i in left..=right {
+            spiral[top as usize][i as usize] = 1;
+        }
+
+        top += 1;
+
+        if top > bottom {
+            exit = true;
+            break;
+        }
+
+        // going down
+
+        for i in top..=bottom {
+            spiral[i as usize][right as usize] = 1;
+        }
+
+        right -= 1;
+
+        if right < left {
+            exit = true;
+            break;
+        }
+
+        // going left
+
+        for i in (left..=right).rev() {
+            spiral[bottom as usize][i as usize] = 1;
+        }
+
+        bottom -= 1;
+
+        if bottom < top {
+            exit = true;
+            break;
+        }
+
+        // going up
+
+        for i in (top..=bottom).rev() {
+            spiral[i as usize][left as usize] = 1;
+        }
+
+        left += 1;
+
+        if left > right {
+            exit = true;
+            break;
+        }
+       
+    }
+
+    spiral
+}
