@@ -586,6 +586,15 @@ fn main() {
     let number = 345;
     get_next_bigger_number(number);
     
+    println!("==========================================================");
+    println!("====               Permutation Primes                 ====");
+    println!("==========================================================");
+    
+    /*
+        https://www.codewars.com/kata/55eec0ee00ae4a8fa0000075/rust
+
+    */
+
 }
 
 
