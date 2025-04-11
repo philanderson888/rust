@@ -532,7 +532,7 @@ fn main() {
     println!("filtered numbers using the filter {} are {:?}", "x > 3", filtered_numbers);
 
     println!("==============================================================");
-    println!("====                    Create Spiral                     ====");
+    println!("====         Create Spiral  *** NOT FINISHED ***          ====");
     println!("==============================================================");
 
     // given a nxn matrix create a spiral that a snake can follow
@@ -563,6 +563,29 @@ fn main() {
 
     println!("spiral is {:?}", spiral);
 
+    println!("==============================================================");
+    println!("=====   create next biggest integer from existing digits  ====");
+    println!("==============================================================");
+
+    /*
+    
+        Create a function that takes a positive integer and returns the next bigger number that can be formed by rearranging its digits. 
+        
+        For example:
+
+            12 ==> 21
+            513 ==> 531
+            2017 ==> 2071
+    
+    */
+
+    let number = 12;
+    get_next_bigger_number(number);
+    let number = 21;
+    get_next_bigger_number(number);
+    let number = 345;
+    get_next_bigger_number(number);
+    
 }
 
 
@@ -1621,11 +1644,11 @@ fn create_spiral(n: usize) -> Vec<Vec<i32>> {
     let mut top = 1;
     let mut bottom = n as i32 - 2;
 
-    let mut num = 1;
+    //let mut num = 1;
 
-    let mut exit = false;
+    let mut _exit = false;
 
-    while !exit {
+    while !_exit {
 
         // going right 
 
@@ -1636,7 +1659,7 @@ fn create_spiral(n: usize) -> Vec<Vec<i32>> {
         top += 1;
 
         if top > bottom {
-            exit = true;
+            _exit = true;
             break;
         }
 
@@ -1649,7 +1672,7 @@ fn create_spiral(n: usize) -> Vec<Vec<i32>> {
         right -= 1;
 
         if right < left {
-            exit = true;
+            _exit = true;
             break;
         }
 
@@ -1662,7 +1685,7 @@ fn create_spiral(n: usize) -> Vec<Vec<i32>> {
         bottom -= 1;
 
         if bottom < top {
-            exit = true;
+            _exit = true;
             break;
         }
 
@@ -1675,11 +1698,59 @@ fn create_spiral(n: usize) -> Vec<Vec<i32>> {
         left += 1;
 
         if left > right {
-            exit = true;
+            _exit = true;
             break;
         }
        
     }
 
     spiral
+}
+
+fn get_next_bigger_number(n: u64) -> Option<u64> {
+
+    println!("\nfinding next biggest number made from input number {}", n);
+    
+    if n < 10 {
+        println!("input number is less than 10");
+        return None;
+    }
+
+    let digits = n.to_string().chars().collect::<Vec<_>>();
+
+    println!("digits are {:?}", digits);
+
+    if digits.len() < 2 {
+        return None;
+    }
+
+    let len = digits.len();
+
+    println!("len is {}", len);
+
+    let mut i = len - 1;
+
+    while i > 0 && digits[i] <= digits[i - 1] {
+        i -= 1;
+    }
+
+    if i == 0 {
+        println!("no bigger number possible");
+        return None;
+    }
+
+    let mut j = len - 1;
+    while digits[j] <= digits[i - 1] {
+        j -= 1;
+    }
+
+    let mut new_digits = digits.clone();
+    new_digits.swap(i - 1, j);
+    new_digits[i..].reverse();
+
+    let next_bigger_number = new_digits.iter().collect::<String>().parse::<u64>().unwrap();
+
+    println!("next bigger number for {} is {}", n, next_bigger_number);
+
+    Some(next_bigger_number)
 }
