@@ -6,6 +6,7 @@ Learning about the great programming language Rust
 
 - [rust](#rust)
   - [contents](#contents)
+  - [update](#update)
   - [introduction](#introduction)
   - [01 getting started](#01-getting-started)
   - [02 first project](#02-first-project)
@@ -27,6 +28,10 @@ Learning about the great programming language Rust
   - [18 environment variables](#18-environment-variables)
   - [19 file handling](#19-file-handling)
   - [20 gui project](#20-gui-project)
+
+## update
+
+https://howtouselinux.medium.com/rust-1-86-0-release-highlights-what-youve-been-waiting-for-6b7e4a5906bf
 
 
 ## introduction
