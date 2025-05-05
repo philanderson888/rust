@@ -9,6 +9,7 @@ Learning about the great programming language Rust
   - [update](#update)
   - [introduction](#introduction)
   - [learning path](#learning-path)
+  - [making rust readable](#making-rust-readable)
   - [01 getting started](#01-getting-started)
   - [02 first project](#02-first-project)
   - [03 variables operators functions](#03-variables-operators-functions)
@@ -63,6 +64,9 @@ to experiment with your code, you’ll have deep understanding on core Rust conc
 
 The visuals will accelerate your speed for understanding other languages too.
 
+## making rust readable
+
+https://medium.com/@lordmoma/ok-rust-you-really-have-a-readability-problem-e379df7df8df
 
 ## 01 getting started
 
