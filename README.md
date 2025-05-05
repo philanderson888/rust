@@ -68,6 +68,12 @@ The visuals will accelerate your speed for understanding other languages too.
 
 https://medium.com/@lordmoma/ok-rust-you-really-have-a-readability-problem-e379df7df8df
 
+rust anyhow
+
+https://docs.rs/anyhow/latest/anyhow/
+
+
+
 ## 01 getting started
 
 instructions on getting started with rust
